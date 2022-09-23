@@ -54,8 +54,11 @@ GUI打包程序下载地址：
 https://wwd.lanzoum.com/b01pc53qd
 密码:asv5
 
-## 新版本，自动登录，无需抓包，扫码即可，由于python自带库，程序打包有点大
-「抢讲座GUI程序.exe」https://www.aliyundrive.com/s/HeSk4bKHrYt 提取码: ys40
+## 新版本，自动登录，无需抓包，扫码即可.
+https://wwd.lanzoum.com/b01pvee8j
+密码：8888
+
+支持定做脚本！！！
 
 有问题联系邮箱lzmpt@qq.com
 
