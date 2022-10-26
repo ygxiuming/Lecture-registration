@@ -19,9 +19,9 @@ windows环境
 ~~~
 
 ## GUI界面
+<img src="README.assets/GUI.png"/>
 
-![](README.assets/GUI.png)
-![](README.assets/9.png)
+<img src="README.assets/9.png"/>
 
 ## 使用方法
 
@@ -39,13 +39,13 @@ windows环境
 
 打开对应小程序讲座页面
 
-![](README.assets/10.png)
+<img src="README.assets/10.png"/>
 
-![](README.assets/11.png)
+<img src="README.assets/11.png"/>
 
 点击分享，然后点击H5链接即可看到对应的eid
 
-![](README.assets/12.png)
+<img src="README.assets/12.png"/>
 
 注：仅供交流学习，禁止违法使用，一切违法行为与本人无关！！！
 
