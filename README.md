@@ -48,6 +48,7 @@ windows环境
 ！！！注意：eid不是网址，是网址后面那一串。
 <br>
 例如网址为：http://p.baominggongju.com/share.html?eid=635a00aa52f3d452c56bd09d
+<br>
 则他对应的eid为：635a00aa52f3d452c56bd09d
 
 <img src="README.assets/12.png"/>
