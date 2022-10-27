@@ -46,6 +46,7 @@ windows环境
 点击分享，然后点击H5链接即可看到对应的eid
 
 ！！！注意：eid不是网址，是网址后面那一串。
+<br>
 例如网址为：http://p.baominggongju.com/share.html?eid=635a00aa52f3d452c56bd09d
 则他对应的eid为：635a00aa52f3d452c56bd09d
 
