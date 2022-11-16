@@ -291,7 +291,7 @@ def main():
                 break
             else:
                 i = i + 1
-                prints(str(ttime) + "请查看response，刷新中... 刷新第".format(str(msg)) + str((i-1)) + "次" + "\n")
+                prints(str(ttime) + "请查看response，刷新中... 刷新第" + str((i-1)) + "次" + "\n")
                 time.sleep(1)
 def login():
     # 获取登录token
