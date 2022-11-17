@@ -68,3 +68,16 @@ https://wwd.lanzoum.com/b01pvee8j
 
 有问题联系邮箱lzmpt@qq.com
 
+<h2>最后的最后，可以给我一个star吗？万分感谢！</h2>
+
+## &#8627; Stargazers
+
+[![Stargazers repo roster for @ygxiuming/Lecture-registration](https://reporoster.com/stars/ygxiuming/Lecture-registration)](https://github.com/ygxiuming/Lecture-registration/stargazers)
+
+## &#8627; Forkers
+
+[![Forkers repo roster for @ygxiuming/Lecture-registration](https://reporoster.com/forks/ygxiuming/Lecture-registration)](https://github.com/ygxiuming/Lecture-registration/network/members)
+
+
+
+
