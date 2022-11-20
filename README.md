@@ -115,6 +115,10 @@ https://wwd.lanzoum.com/b01pvee8j
 
 <h2>最后的最后，可以给我一个star吗？万分感谢！</h2>
 
+
+## 如果本仓库对你有帮助，欢迎扫描下面二维码给我赞赏
+
+![赞赏](https://gitee.com/ygxiu/lecture-registration/raw/master/README.assets/Snipaste_2022-11-20_11-08-44.png)
 ## &#8627; Stargazers
 
 [![Stargazers repo roster for @ygxiuming/Lecture-registration](https://reporoster.com/stars/ygxiuming/Lecture-registration)](https://github.com/ygxiuming/Lecture-registration/stargazers)
