@@ -209,9 +209,9 @@ class Login():
                     return token
 
 def personal():
-    url = 'https://gitee.com/ygxiu/lecture-registration/raw/master/README.assets/Snipaste_2022-11-20_11-08-44.png'
+    url = 'https://ygxiuming.github.io/Lecture-registration/'
     os.system(
-        '"C:\Program Files\internet explorer\iexplore.exe" https://gitee.com/ygxiu/lecture-registration/raw/master/README.assets/Snipaste_2022-11-20_11-08-44.png')
+        '"C:\Program Files\internet explorer\iexplore.exe" https://ygxiuming.github.io/Lecture-registration/')
 
 
 class Lecture(Login):
