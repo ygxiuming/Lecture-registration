@@ -9,6 +9,7 @@
 '''
 api_prod = "https://api-xcx-qunsou.weiyoubot.cn"
 Config = {
+            "appid": "wxfaa08012777a431e",
             # vip登录
             "vipLogin": '/xcx/enroll/v1/vip/login',
             # 报名详情接口(新)

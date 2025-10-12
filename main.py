@@ -18,6 +18,7 @@ import time
 from datetime import datetime
 
 import cv2
+import execjs
 import requests
 from rich import pretty
 from rich import print as print
@@ -51,13 +52,38 @@ class Login():
             'sec-fetch-site': 'cross-site',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0'
         }
+
+        self.submit_headers = {
+              'authority': 'api-xcx-qunsou.weiyoubot.cn',
+              'accept': '*/*',
+              'accept-language': 'zh-CN,zh;q=0.9',
+              'content-type': 'application/json',
+              'referer': 'https://servicewechat.com/wxfaa08012777a431e/1173/page-frame.html',
+              'sec-fetch-dest': 'empty',
+              'sec-fetch-mode': 'cors',
+              'sec-fetch-site': 'cross-site',
+              'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090a13) XWEB/8555',
+              'xweb_xhr': '1'
+            }
         self.code = "e5ff76cdcc334efa8582f77debed26d5"
         self.qrcode = ""
         self.token = ""
         self.debug_status = False
         self.personal_info = ""
         self.extra_info = {}
-        self.login()
+        self.input_login()
+        # self.login()
+
+    def input_login(self):
+        '''
+        输入登录信息
+        '''
+        console.print("注意：往常的网页登录获取的token已被封禁，现只能使用小程序登录")
+        console.print("请使用抓包工具获取小程序登录token，输入token进行后续操作！")
+        console.print("抓包工具推荐使用 ProxyPin ， 配置教程：暂时未定 ， 后续会更新。")
+        self.token = input("请输入token: ")
+        self.verify_token()
+
 
     def get_login_code_image(self):
         '''
@@ -88,6 +114,7 @@ class Login():
         '''
         # url = config.api_prod + config.Config['api_pc_login']
         url = f"{self.base_url}/xcx/enroll_web/v1/pc_login"
+        # url = f"{self.base_url}/xcx/enroll/v2/login"
         response = requests.request("GET",
                                     url,
                                     params={"code": code, "source": "h5"},
@@ -202,60 +229,66 @@ class Lecture(Login):
 
         Returns: 历史讲座信息
         '''
-        url = f"{self.base_url}/xcx/enroll/v1/user/history"
-        response = requests.request("GET", url, params={"access_token": self.token}, headers=self.login_headers)
-        response_data = response.json()
-        if response.status_code == 200:
-            data = response_data["data"]
-            # print(data)
-            # return response_data['data']
-            # status:1 进行中 2结束
+        try:
+            url = f"{self.base_url}/xcx/enroll/v1/user/history"
+            response = requests.request("GET", url, params={"access_token": self.token}, headers=self.login_headers)
+            response_data = response.json()
+            if response.status_code == 200:
+                data = response_data["data"]
+                # print(data)
+                # return response_data['data']
+                # status:1 进行中 2结束
 
-            for history_item in data:
-                if history_item.get("status") == 1:
-                    history_data = {}
-                    history_data["title"] = history_item.get("title")                   # 活动标题
-                    history_data["start_time"] = history_item.get("start_time")         # 活动开始时间，此处为时间戳 1735724700
-                    history_data["status"] = history_item.get("status")                 # 活动状态，status:1 进行中 2结束或者未开始
-                    history_data["eid"] = history_item.get("eid")                       # 活动唯一标识eid
-                    history_data["limit"] = history_item.get("limit")                   # 活动报名数量
-                    self.history_item.append(history_data)
-                else:
-                    current_timestamp = time.time()
-                    item_start_time = history_item.get("start_time")
-                    if item_start_time > current_timestamp:
+                for history_item in data:
+                    if history_item.get("status") == 1:
                         history_data = {}
-                        history_data["title"] = history_item.get("title")  # 活动标题
-                        history_data["start_time"] = history_item.get("start_time")  # 活动开始时间，此处为时间戳 1735724700
-                        history_data["status"] = history_item.get("status")  # 活动状态，status:1 进行中 2结束或者未开始
-                        history_data["eid"] = history_item.get("eid")  # 活动唯一标识eid
-                        history_data["limit"] = history_item.get("limit")  # 活动报名数量
+                        history_data["title"] = history_item.get("title")                   # 活动标题
+                        history_data["start_time"] = history_item.get("start_time")         # 活动开始时间，此处为时间戳 1735724700
+                        history_data["status"] = history_item.get("status")                 # 活动状态，status:1 进行中 2结束或者未开始
+                        history_data["eid"] = history_item.get("eid")                       # 活动唯一标识eid
+                        history_data["limit"] = history_item.get("limit")                   # 活动报名数量
                         self.history_item.append(history_data)
-            # return self.history_item
-            # 初始化表格
-            table = Table(show_header=True, header_style="bold magenta")
-            # 添加列名
-            table.add_column("序号", style="dim", width=5)
-            table.add_column("活动标题", style="dim", width=50)
-            table.add_column("开始时间", style="dim", width=20)
-            table.add_column("活动状态", style="dim", width=8)
-            table.add_column("eid", style="dim", width=25)
-            table.add_column("报名人数", style="dim", width=10)
-            table.title = "历史活动信息"
+                    else:
+                        current_timestamp = time.time()
+                        item_start_time = history_item.get("start_time")
+                        if item_start_time > current_timestamp:
+                            history_data = {}
+                            history_data["title"] = history_item.get("title")  # 活动标题
+                            history_data["start_time"] = history_item.get("start_time")  # 活动开始时间，此处为时间戳 1735724700
+                            history_data["status"] = history_item.get("status")  # 活动状态，status:1 进行中 2结束或者未开始
+                            history_data["eid"] = history_item.get("eid")  # 活动唯一标识eid
+                            history_data["limit"] = history_item.get("limit")  # 活动报名数量
+                            self.history_item.append(history_data)
+                # return self.history_item
+                # 初始化表格
+                table = Table(show_header=True, header_style="bold magenta")
+                # 添加列名
+                table.add_column("序号", style="dim", width=5)
+                table.add_column("活动标题", style="dim", width=50)
+                table.add_column("开始时间", style="dim", width=20)
+                table.add_column("活动状态", style="dim", width=8)
+                table.add_column("eid", style="dim", width=25)
+                table.add_column("报名人数", style="dim", width=10)
+                table.title = "历史活动信息"
 
-            # 遍历历史活动信息
-            for index, history_item in enumerate(self.history_item, start=1):
-                self.history_item_index[str(index)] = history_item
-                start_time = datetime.fromtimestamp(history_item['start_time']).strftime('%Y-%m-%d %H:%M:%S')
-                if history_item['status'] == 1:
-                    status = "进行中"
-                else:
-                    status = "未开始"
-                # 添加行数据
-                table.add_row(str(index), history_item['title'], str(start_time), status,
-                              str(history_item['eid']), str(history_item['limit']))
-            # 输出表格
-            console.print(table)
+                # 遍历历史活动信息
+                for index, history_item in enumerate(self.history_item, start=1):
+                    self.history_item_index[str(index)] = history_item
+                    start_time = datetime.fromtimestamp(history_item['start_time']).strftime('%Y-%m-%d %H:%M:%S')
+                    if history_item['status'] == 1:
+                        status = "进行中"
+                    else:
+                        status = "未开始"
+                    # 添加行数据
+                    table.add_row(str(index), history_item['title'], str(start_time), status,
+                                  str(history_item['eid']), str(history_item['limit']))
+                # 输出表格
+                console.print(table)
+        except Exception as e:
+            console.print("获取历史讲座数据失败：大概率token过期或者token错误，请重新获取！")
+            console.print("错误原因如下！")
+            console.print(e)
+            time.sleep(30)
 
     def get_registration_info(self, eid: str):
         '''
@@ -326,6 +359,7 @@ class Lecture(Login):
 
         infoes = []
         for item in info:
+            print(item)
             field_name = item["field_name"]
             field_type = item["type_text"]
             options = self._format_options(item)
@@ -346,25 +380,30 @@ class Lecture(Login):
         console.print(table)
         return infoes
 
+    def generate_a_and_s(self, eid: str, token: str) -> dict:
+        """
+        模拟微信小程序中的 _a 和 _s 生成逻辑（38位版本）
+        """
 
-    def generate_signature(self,token: str, eid: str):
-        '''
-        生成提交报名时需要的签名
-        Args:
-            token: 用户登录凭证
-            eid: 讲座ID
+        def randow_key() -> str:
+            n = int(65536 * (1 + random.random()))
+            return hex(n)[-4:]
+        # 1. 随机部分：randowKey() * 2
+        rand_part = randow_key()
 
-        Returns: 签名字符串
-        '''
-        def random_key(length=4):
-            chars = string.ascii_letters + string.digits
-            return ''.join(random.choice(chars) for _ in range(length))
+        # 2. 拼 token 前 2 位
+        k = rand_part + token[:2]
 
-        T = random_key() + token[:2]
+        # 3. 计算 I = md5(eid)
         I = hashlib.md5(eid.encode()).hexdigest()
-        b = str(int(time.time() * 1000))
-        M = T + hashlib.md5((I + b + "qwrq2w").encode()).hexdigest()
-        return M
+
+        # 4. 毫秒时间戳
+        b = int(time.time() * 1000)
+
+        # 5. 计算 M
+        M = k + hashlib.md5(f"{I}{b}qwrq2w".encode()).hexdigest()
+
+        return M, b
 
     def submit_registration(self,token: str, eid: str, info: list):
         '''
@@ -377,6 +416,7 @@ class Lecture(Login):
         Returns: (bool, str) - (是否成功, 消息)
         '''
         url = f'{self.base_url}/xcx/enroll/v5/enroll'
+        _a, _s = self.generate_a_and_s(eid = eid, token = token)
         data = {
             "access_token": token,
             "eid": eid,
@@ -386,14 +426,16 @@ class Lecture(Login):
             "referer": "",
             "fee_type": "",
             "from": "xcx",
-            "_a": self.generate_signature(token, eid),
-            "_s": int(time.time() * 1000)
+            "_a": f"{_a}",
+            "_s": f"{_s}"
         }
+
+        print(data)
 
         try:
             response = requests.post(
                 url,
-                headers=self.login_headers,
+                headers=self.submit_headers,
                 data=json.dumps(data),
                 verify=False,
                 timeout=1
