@@ -72,6 +72,62 @@ rich==12.6.0
 执行 `python main.py` 或者点击打包版exe文件运行即可
 
 
+### 文件结构
+
+```
+Lecture-registration/
+├── main.py                          # 原有文件 (保持不变)
+├── main_refactored.py               # 重构后的主文件
+├── requirements.txt                 # 依赖文件 (已更新)
+├── .env.example                     # 配置示例 (新增)
+├── .gitignore                       # Git忽略文件 (新增)
+├── CLAUDE.md                        # 项目文档 (已创建)
+├── REFACTORING_SUMMARY.md          # 本文件
+├── test_refactored.py              # 单元测试 (新增)
+│
+├── utils/                           # 工具模块 (新增)
+│   ├── __init__.py
+│   ├── constants.py                # 常量定义
+│   ├── validators.py               # 数据验证
+│   ├── security.py                 # 安全认证
+│   ├── api_client.py               # API客户端
+│   └── formatters.py               # 数据格式化
+│
+└── services/                        # 业务服务 (新增)
+    ├── __init__.py
+    ├── auth_service.py             # 认证服务
+    └── lecture_service.py          # 活动服务
+```
+
+### 核心改进
+
+1. **模块化设计**: 将功能分解为独立的模块，每个模块职责单一
+2. **面向对象**: 使用类封装API客户端和服务层
+3. **类型注解**: 为所有函数添加类型提示
+4. **日志记录**: 使用 Python logging 模块
+5. **安全增强**: 启用SSL验证，移除eval()
+6. **配置管理**: 使用常量文件管理配置
+7. **测试支持**: 添加单元测试验证功能
+
+## 运行方式
+
+### 原有方式 (保持不变)
+```bash
+python main.py
+```
+
+### 重构方式 (推荐)
+```bash
+# 先安装新依赖
+pip install -r requirements.txt
+
+# 运行重构版本
+python main_refactored.py
+
+# 运行测试
+python test_refactored.py
+```
+
 
 ## 程序执行快看
 

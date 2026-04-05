@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(python test_refactored.py)",
+      "Bash(python -c \"from utils.validators import match_field_name; extra_info = {'姓名': '修明'}; print\\(match_field_name\\('姓', extra_info\\)\\)\")",
+      "Bash(python:*)",
+      "Bash(echo \"Exit code: $?\")"
+    ]
+  }
+}
